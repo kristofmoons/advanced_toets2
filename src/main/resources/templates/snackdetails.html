@@ -1,0 +1,60 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" href="../static/css/style.css"/>
+    <title>Let's Party!</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header">Header</div>
+
+<div class="row1">
+    <div class="row1content" th:if="${snack}">
+        <div th:if="|${snack.getId()<=snack.id && snack.id!=0}|">
+        <div class="prevButtonDiv">
+            <a class="buttonLook smallButton" th:href="@{|/snackdetails/${snack.id}/prev|}">&lt;</a>
+        </div>
+        <div class="nextButtonDiv">
+            <a class="buttonLook smallButton" th:href="@{|/snackdetails/${snack.id}/next|}">&gt;</a>
+        </div>
+
+        <h2 th:text="|snack: ${snack.getName()}|"></h2>
+
+        <div class="venueinfo">
+
+            <div class="infoLine">
+                <div class="infoLineName">vegan?</div>
+                <div th:if="${snack.isVegan()}">
+                <div class="infoLineValue" th:text="yes"></div>
+                </div>
+                <div th:unless="${snack.isVegan()}">
+                    <div class="infoLineValue" th:text="no"></div>
+                </div>
+            </div>
+            <div class="infoLine">
+                <div class="infoLineName">price:</div>
+                    <div class="infoLineValue" th:text="|${snack.getPrice()} €|"></div>
+            </div>
+            <div class="infoLine">
+                <div th:if="${snack.isSideDishPossible()}">
+                <div class="infoLineName">price with side dish:</div>
+                <div class="infoLineValue" th:text="|${snack.getPriceSideDish()} €|"></div>
+                </div>
+            </div>
+        </div>
+            <div class="row1content" th:unless="|${snack.getId()<=snack.id && snack.id!=0}|">
+                <p> index number between 1 and 7</p>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="row1content" th:unless="${snack}">
+        <p>no snack was chosen</p>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer">Footer</div>
+
+</body>
+</html>

@@ -18,8 +18,8 @@
             </div>
             <div class="venuelist">
                 <div th:each="snack: ${snacks}">
-                    <a class="buttonLook mediumButton">
-                        <span th:text="${snack.name}"> </span>
+                    <a class="buttonLook mediumButton" th:href="@{|snackdetails/${snack.getId()}|}">
+                        <span th:text="${snack.getName()}"> </span>
                         <div th:if="${snack.isSideDishPossible()}">
                         <div th:text="|Side dish possible with order|" class="venueExtraInfo"></div>
                         </div>
