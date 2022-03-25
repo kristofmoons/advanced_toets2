@@ -11,6 +11,8 @@ public class Snack {
     private boolean vegan;
     private boolean sideDishPossible;
     private double price;
+//    in theorie wel maar dan moet de klant altijd een sidedish nemen door Double te gebruiken
+//    kan sideDish null zijn en moet de klant niet per see een sidedish nemen of kan er ook gewoon geen sidedish zijn
     private Double priceSideDish;
 
     public Snack() {
