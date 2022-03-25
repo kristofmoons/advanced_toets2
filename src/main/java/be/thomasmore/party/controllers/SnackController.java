@@ -39,13 +39,16 @@ public class SnackController {
     @GetMapping({"/snacklist/filter"})
     public String snacklistWithFilter(Model model,
                                       @RequestParam(required = false) Double maxPrice,
+                                      @RequestParam(required = false) String sideDishPossible,
                                       @RequestParam(required = false) String vegan){
 
         List<Snack> snacks = snackRepository.findByFilterSnack( maxPrice, filterStringToBoolean(vegan));
+        List<Snack> snackswithSide = snackRepository.findByFilterSnackAndSide( maxPrice, filterStringToBoolean(sideDishPossible), filterStringToBoolean(vegan));
 
         long nrOfSnacks = snacks.size();
 
         model.addAttribute("snacks", snacks);
+        model.addAttribute("snackswithSide", snackswithSide);
         model.addAttribute("nrOfSnacks", nrOfSnacks);
         model.addAttribute("showFilters", true);
         model.addAttribute("maxPrice", maxPrice);
