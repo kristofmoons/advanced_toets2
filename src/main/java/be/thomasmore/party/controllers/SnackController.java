@@ -10,13 +10,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class SnackController {
     @Autowired
     private SnackRepository snackRepository;
+
+    private Boolean filterStringToBoolean(String filterString) {
+        return (filterString == null || filterString.equals("all")) ? null : filterString.equals("yes");
+    }
 
     @GetMapping({"/snacklist","/snacklist/{extrawoord}"})
     public String snacklist(Model model,
@@ -27,6 +33,23 @@ public class SnackController {
 
         model.addAttribute("snacks", snacks);
         model.addAttribute("nrOfSnacks", nrOfSnacks);
+
+        return "snacklist";
+    }
+    @GetMapping({"/snacklist/filter"})
+    public String snacklistWithFilter(Model model,
+                                      @RequestParam(required = false) Double maxPrice,
+                                      @RequestParam(required = false) String vegan){
+
+        List<Snack> snacks = snackRepository.findByFilterSnack( maxPrice, filterStringToBoolean(vegan));
+
+        long nrOfSnacks = snacks.size();
+
+        model.addAttribute("snacks", snacks);
+        model.addAttribute("nrOfSnacks", nrOfSnacks);
+        model.addAttribute("showFilters", true);
+        model.addAttribute("maxPrice", maxPrice);
+        model.addAttribute("vegan", vegan);
 
         return "snacklist";
     }
