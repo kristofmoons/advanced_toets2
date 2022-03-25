@@ -2,6 +2,8 @@ package be.thomasmore.party.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.Collection;
 
 @Entity
 public class Venue {
@@ -16,6 +18,10 @@ public class Venue {
     private boolean freeParkingAvailable;
     private String city;
     private int distanceFromPublicTransportInKm;
+
+
+    @ManyToMany(mappedBy = "venues")
+    private Collection<Snack> snacks;
 
     public Venue() {
     }
@@ -110,5 +116,14 @@ public class Venue {
 
     public void setDistanceFromPublicTransportInKm(int distanceFromPublicTransportInKm) {
         this.distanceFromPublicTransportInKm = distanceFromPublicTransportInKm;
+    }
+
+
+    public Collection<Snack> getSnacks() {
+        return snacks;
+    }
+
+    public void setSnacks(Collection<Snack> snacks) {
+        this.snacks = snacks;
     }
 }

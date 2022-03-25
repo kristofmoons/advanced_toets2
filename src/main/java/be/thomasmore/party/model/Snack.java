@@ -1,7 +1,10 @@
 package be.thomasmore.party.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.Collection;
 
 @Entity
 public class Snack {
@@ -14,6 +17,9 @@ public class Snack {
 //    in theorie wel maar dan moet de klant altijd een sidedish nemen door Double te gebruiken
 //    kan sideDish null zijn en moet de klant niet per see een sidedish nemen of kan er ook gewoon geen sidedish zijn
     private Double priceSideDish;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Collection<Venue> venues;
 
     public Snack() {
     }
@@ -72,5 +78,13 @@ public class Snack {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Collection<Venue> getVenues() {
+        return venues;
+    }
+
+    public void setVenues(Collection<Venue> venues) {
+        this.venues = venues;
     }
 }
